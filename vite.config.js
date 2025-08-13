@@ -9,6 +9,5 @@ export default defineConfig({
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     },
-    transpileDependencies: true,
-    publicPath: '/my-edit/'
+  base: '/my-edit/',  // 设置公共路径
 });
