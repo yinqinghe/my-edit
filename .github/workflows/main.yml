@@ -1,0 +1,41 @@
+name: Build and Deploy Vue.js App
+
+on:
+    push:
+        branches:
+            - main # 可以修改为你项目的默认分支（如 master）
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest # 使用 GitHub 提供的最新 Ubuntu 运行环境
+
+        steps:
+            # Checkout code
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            # Set up Node.js
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '22' # 使用合适的 Node.js 版本，视你项目需要的版本而定
+
+            # Install dependencies
+            - name: Install dependencies
+              run: |
+                  npm install
+
+            # Build the project
+            - name: Build
+              run: |
+                  npm run build
+
+            # Deploy to GitHub Pages
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.MIKE }}
+                  publish_dir: ./dist # Vite build 输出的目录
